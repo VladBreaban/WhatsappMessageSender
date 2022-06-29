@@ -2,3 +2,4 @@
 
 Console.WriteLine("Welcome to CraftedForEveryone.com");
 
+new ChromeWhatsAppSender().AttachFileWithCustomMessage("+40766611971", @"C:\Users\Vlad\Desktop\TDD_lab6.pdf","hello");

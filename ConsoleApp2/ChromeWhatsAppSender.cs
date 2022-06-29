@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System.Diagnostics;
+using System.Drawing;
 
 public class ChromeWhatsAppSender
 {
@@ -33,6 +34,8 @@ public class ChromeWhatsAppSender
         foreach (Process p in Process.GetProcessesByName("chrome")) p.Kill();
         var chromeOptions = new ChromeOptions();
         var user = Environment.UserName;
+        chromeOptions.AddExcludedArgument("enable-automation");
+        chromeOptions.AddAdditionalOption("useAutomationExtension", false);
         chromeOptions.AddArgument($"--user-data-dir=C:\\Users\\{user}\\AppData\\Local\\Google\\Chrome\\User Data");
         return new ChromeDriver(chromeOptions);
     }
@@ -58,6 +61,8 @@ public class ChromeWhatsAppSender
 
             using (_driver = InitializeDriver())
             {
+                _driver.Manage().Window.Position = new Point(-2000, 0);
+
                 Thread.Sleep(3000);
 
                 _driver.Navigate().GoToUrl("https://web.whatsapp.com");
@@ -128,6 +133,7 @@ public class ChromeWhatsAppSender
 
             using (_driver = InitializeDriver())
             {
+                _driver.Manage().Window.Position= new Point(-2000, 0);
                 Thread.Sleep(3000);
 
                 _driver.Navigate().GoToUrl("https://web.whatsapp.com");
