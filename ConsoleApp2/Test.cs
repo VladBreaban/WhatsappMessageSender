@@ -58,11 +58,11 @@ public class ChromeWhatsAppSender
 
             using (_driver = InitializeDriver())
             {
-                Thread.Sleep(3000);
+                //Thread.Sleep(3000);
 
                 _driver.Navigate().GoToUrl("https://web.whatsapp.com");
 
-                _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+                _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
                 var isWhatsappLogged = VerifyWhatssAppIsLogged().ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -106,7 +106,7 @@ public class ChromeWhatsAppSender
                     }
 
                     isSend = true;
-                    Thread.Sleep(2000);
+                    //Thread.Sleep(2000);
 
                 }
 
@@ -128,11 +128,11 @@ public class ChromeWhatsAppSender
 
             using (_driver = InitializeDriver())
             {
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
 
                 _driver.Navigate().GoToUrl("https://web.whatsapp.com");
 
-                _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+                _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 //first of all we are going to verify if whatssap is logged or not
                 var isWhatsappLogged = VerifyWhatssAppIsLogged().ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -146,12 +146,19 @@ public class ChromeWhatsAppSender
                 //go to url used for sending the message, this is no an external API or something, this is used by Whatsapp, intern, to send message.
                 var msg = message;
                 _driver.Navigate().GoToUrl("https://api.whatsapp.com/send?phone=" + mobile + "&text=" + Uri.EscapeDataString(msg));
-                Thread.Sleep(2000);
+                //Thread.Sleep(2000);
 
                 //from now on it effectively imitates the way a person works
-                _driver.FindElement(By.Id("action-button")).Click();
+                //var element = _driver.FindElement(By.Id("action-button"));
+                var wait = new WebDriverWait(_driver, TimeSpan.FromMinutes(1));
+                var actionButtonElement = _driver.FindElement(By.Id("action-button"));
+                wait.Until(ElementIsClickable(actionButtonElement));
+                actionButtonElement.Click();
 
-                _driver.FindElement(By.LinkText("use WhatsApp Web")).Click();
+                var useWhatAappWebElement = _driver.FindElement(By.LinkText("use WhatsApp Web"));
+                wait.Until(ElementIsClickable(useWhatAappWebElement));
+                useWhatAappWebElement.Click();
+                //_driver.FindElement(By.LinkText("use WhatsApp Web")).Click();
 
                 var errormsg = _driver.FindElements(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[2]/div/div/div/div")).SingleOrDefault();
                 if (errormsg != null)
@@ -179,6 +186,12 @@ public class ChromeWhatsAppSender
         return isSend;
 
     }
-
+    public static Func<IWebDriver, IWebElement> ElementIsClickable(IWebElement element)
+    {
+        return driver =>
+        {
+            return (element != null && element.Displayed && element.Enabled) ? element : null;
+        };
+    }
 
 }
