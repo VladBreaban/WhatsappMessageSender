@@ -61,7 +61,7 @@ public class ChromeWhatsAppSender
 
             using (_driver = InitializeDriver())
             {
-                //Thread.Sleep(3000);
+                Thread.Sleep(1000);
 
                 _driver.Navigate().GoToUrl("https://web.whatsapp.com");
 
@@ -78,40 +78,65 @@ public class ChromeWhatsAppSender
 
                 var msg = message;
                 _driver.Navigate().GoToUrl("https://api.whatsapp.com/send?phone=" + mobile + "&text=" + Uri.EscapeDataString(msg));
-                Thread.Sleep(3000);
-                _driver.FindElement(By.Id("action-button")).Click();
+                //Thread.Sleep(3000);
+                var wait = new WebDriverWait(_driver, TimeSpan.FromMinutes(1));
+                var actionButtonElement = _driver.FindElement(By.Id("action-button"));
+                wait.Until(ElementIsClickable(actionButtonElement));
+                actionButtonElement.Click();
+                //_driver.FindElement(By.Id("action-button")).Click();
 
                 _driver.FindElement(By.LinkText("use WhatsApp Web")).Click();
                 //add a delay
-                var errormsg = _driver.FindElements(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[2]/div/div/div/div")).SingleOrDefault();
-                if (errormsg != null)
+                //var errormsg = _driver.FindElements(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[2]/div/div/div/div")).SingleOrDefault();
+                //if (errormsg != null)
+                //{
+                //    Thread.Sleep(2000);
+                //    var messageshow = _driver.FindElement(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[1]")).Text;
+
+                //    throw new Exception("Message Failed Due To " + messageshow);
+
+                //}
+                //else
+                //{
+                //    _driver.FindElement(By.CssSelector("span[data-icon='clip']")).Click();
+
+                //    //add file path
+                //    _driver.FindElement(By.CssSelector("input[type='file']")).SendKeys(filePath);
+
+                //    //send attachment
+                //    _driver.FindElement(By.XPath("//*[@id='app']/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/div/div[2]/div[2]/div/div")).Click(); //Click SEND Arrow Button
+
+                //    if (message != " ")
+                //    {
+                //        //send text
+                //        var sendButtonElement = _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")); //Click SEND Arrow Button
+                //        wait.Until(ElementIsClickable(sendButtonElement));
+                //        sendButtonElement.Click();
+                //    }
+
+                //    isSend = true;
+                //    //Thread.Sleep(2000);
+
+                //}
+
+                _driver.FindElement(By.CssSelector("span[data-icon='clip']")).Click();
+
+                //add file path
+                _driver.FindElement(By.CssSelector("input[type='file']")).SendKeys(filePath);
+
+                //send attachment
+                _driver.FindElement(By.XPath("//*[@id='app']/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/div/div[2]/div[2]/div/div")).Click(); //Click SEND Arrow Button
+
+                if (message != " ")
                 {
-                    Thread.Sleep(2000);
-                    var messageshow = _driver.FindElement(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[1]")).Text;
-
-                    throw new Exception("Message Failed Due To " + messageshow);
-
+                    //send text
+                    var sendButtonElement = _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")); //Click SEND Arrow Button
+                    wait.Until(ElementIsClickable(sendButtonElement));
+                    sendButtonElement.Click();
                 }
-                else
-                {
-                    _driver.FindElement(By.CssSelector("span[data-icon='clip']")).Click();
 
-                    //add file path
-                    _driver.FindElement(By.CssSelector("input[type='file']")).SendKeys(filePath);
-
-                    //send attachment
-                    _driver.FindElement(By.XPath("//*[@id='app']/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/div/div[2]/div[2]/div/div")).Click(); //Click SEND Arrow Button
-
-                    if (message != " ")
-                    {
-                        //send text
-                        _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")).Click(); //Click SEND Arrow Button
-                    }
-
-                    isSend = true;
-                    //Thread.Sleep(2000);
-
-                }
+                isSend = true;
+                Thread.Sleep(1000);
 
             }
         }
@@ -161,27 +186,36 @@ public class ChromeWhatsAppSender
                 var useWhatAappWebElement = _driver.FindElement(By.LinkText("use WhatsApp Web"));
                 wait.Until(ElementIsClickable(useWhatAappWebElement));
                 useWhatAappWebElement.Click();
+                Thread.Sleep(1000);
                 //_driver.FindElement(By.LinkText("use WhatsApp Web")).Click();
 
-                var errormsg = _driver.FindElements(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[2]/div/div/div/div")).SingleOrDefault();
-                if (errormsg != null)
-                {
-                    Thread.Sleep(2000);
-                    var messageshow = _driver.FindElement(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[1]")).Text;
+                //var errormsg = _driver.FindElements(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[2]/div/div/div/div")).SingleOrDefault();
+                //if (errormsg != null)
+                //{
+                //    Thread.Sleep(2000);
+                //    var messageshow = _driver.FindElement(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[1]")).Text;
 
-                    throw new Exception("Message Failed Due To " + messageshow);
+                //    throw new Exception("Message Failed Due To " + messageshow);
 
-                }
-                else
-                {
-                    var sendButtonElement = _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")); //Click SEND Arrow Button
-                    wait.Until(ElementIsClickable(sendButtonElement));
-                    sendButtonElement.Click();
-                    isSend = true;
-                    Console.WriteLine("Message Send Successfully ");
-                    Thread.Sleep(2000);
+                //}
+                //else
+                //{
+                //    //var sendButtonElement = _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")); //Click SEND Arrow Button
+                //    var sendButtonElement = _driver.FindElement(By.XPath("//span[@data-testid='send']"));
+                //    //wait.Until(ElementIsClickable(sendButtonElement));
+                //    sendButtonElement.Click();
+                //    isSend = true;
+                //    Console.WriteLine("Message Send Successfully ");
+                //    Thread.Sleep(1000);
 
-                }
+                //}
+
+                var sendButtonElement = _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")); //Click SEND Arrow Button
+                wait.Until(ElementIsClickable(sendButtonElement));
+                sendButtonElement.Click();
+                isSend = true;
+                Console.WriteLine("Message Send Successfully ");
+                Thread.Sleep(1000);
 
             }
         }
