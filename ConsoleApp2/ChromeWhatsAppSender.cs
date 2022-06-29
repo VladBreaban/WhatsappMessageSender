@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System.Diagnostics;
+using System.Drawing;
 
 public class ChromeWhatsAppSender
 {
@@ -33,6 +34,8 @@ public class ChromeWhatsAppSender
         foreach (Process p in Process.GetProcessesByName("chrome")) p.Kill();
         var chromeOptions = new ChromeOptions();
         var user = Environment.UserName;
+        chromeOptions.AddExcludedArgument("enable-automation");
+        chromeOptions.AddAdditionalOption("useAutomationExtension", false);
         chromeOptions.AddArgument($"--user-data-dir=C:\\Users\\{user}\\AppData\\Local\\Google\\Chrome\\User Data");
         return new ChromeDriver(chromeOptions);
     }
