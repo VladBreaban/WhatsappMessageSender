@@ -88,38 +88,6 @@ public class ChromeWhatsAppSender
                 //_driver.FindElement(By.Id("action-button")).Click();
 
                 _driver.FindElement(By.LinkText("use WhatsApp Web")).Click();
-                //add a delay
-                //var errormsg = _driver.FindElements(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[2]/div/div/div/div")).SingleOrDefault();
-                //if (errormsg != null)
-                //{
-                //    Thread.Sleep(2000);
-                //    var messageshow = _driver.FindElement(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[1]")).Text;
-
-                //    throw new Exception("Message Failed Due To " + messageshow);
-
-                //}
-                //else
-                //{
-                //    _driver.FindElement(By.CssSelector("span[data-icon='clip']")).Click();
-
-                //    //add file path
-                //    _driver.FindElement(By.CssSelector("input[type='file']")).SendKeys(filePath);
-
-                //    //send attachment
-                //    _driver.FindElement(By.XPath("//*[@id='app']/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/div/div[2]/div[2]/div/div")).Click(); //Click SEND Arrow Button
-
-                //    if (message != " ")
-                //    {
-                //        //send text
-                //        var sendButtonElement = _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")); //Click SEND Arrow Button
-                //        wait.Until(ElementIsClickable(sendButtonElement));
-                //        sendButtonElement.Click();
-                //    }
-
-                //    isSend = true;
-                //    //Thread.Sleep(2000);
-
-                //}
 
                 _driver.FindElement(By.CssSelector("span[data-icon='clip']")).Click();
 
@@ -189,28 +157,6 @@ public class ChromeWhatsAppSender
                 wait.Until(ElementIsClickable(useWhatAappWebElement));
                 useWhatAappWebElement.Click();
                 Thread.Sleep(1000);
-                //_driver.FindElement(By.LinkText("use WhatsApp Web")).Click();
-
-                //var errormsg = _driver.FindElements(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[2]/div/div/div/div")).SingleOrDefault();
-                //if (errormsg != null)
-                //{
-                //    Thread.Sleep(2000);
-                //    var messageshow = _driver.FindElement(By.XPath("//*[@id='app']/div/span[2]/div/span/div/div/div/div/div/div[1]")).Text;
-
-                //    throw new Exception("Message Failed Due To " + messageshow);
-
-                //}
-                //else
-                //{
-                //    //var sendButtonElement = _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")); //Click SEND Arrow Button
-                //    var sendButtonElement = _driver.FindElement(By.XPath("//span[@data-testid='send']"));
-                //    //wait.Until(ElementIsClickable(sendButtonElement));
-                //    sendButtonElement.Click();
-                //    isSend = true;
-                //    Console.WriteLine("Message Send Successfully ");
-                //    Thread.Sleep(1000);
-
-                //}
 
                 var sendButtonElement = _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")); //Click SEND Arrow Button
                 wait.Until(ElementIsClickable(sendButtonElement));
