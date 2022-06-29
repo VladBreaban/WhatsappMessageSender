@@ -8,6 +8,7 @@ using System.Drawing;
 public class ChromeWhatsAppSender
 {
     private IWebDriver _driver;
+    private WebDriverWait wait;
 
     public async Task<bool> VerifyWhatssAppIsLogged()
     {
@@ -41,7 +42,8 @@ public class ChromeWhatsAppSender
     }
     public bool CheckLoggedIn()
     {
-        Thread.Sleep(5000);
+        //Thread.Sleep(5000);
+        var wait = new WebDriverWait(_driver, TimeSpan.FromMinutes(1));
         var checked1 = _driver.FindElements(By.XPath("//*[@id='app']/div/div/div[2]/div[1]/div/div[2]/div")).FirstOrDefault();
         if (checked1 == null)
         {
@@ -227,6 +229,7 @@ public class ChromeWhatsAppSender
     }
     public static Func<IWebDriver, IWebElement> ElementIsClickable(IWebElement element)
     {
+        if (element is null) return null;
         return driver =>
         {
             return (element != null && element.Displayed && element.Enabled) ? element : null;
