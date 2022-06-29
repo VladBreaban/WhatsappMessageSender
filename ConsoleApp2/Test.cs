@@ -171,7 +171,9 @@ public class ChromeWhatsAppSender
                 }
                 else
                 {
-                    _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")).Click(); //Click SEND Arrow Button
+                    var sendButtonElement = _driver.FindElement(By.CssSelector("#main > footer > div._2BU3P.tm2tP.copyable-area > div > span:nth-child(2) > div > div._2lMWa > div._3HQNh._1Ae7k > button")); //Click SEND Arrow Button
+                    wait.Until(ElementIsClickable(sendButtonElement));
+                    sendButtonElement.Click();
                     isSend = true;
                     Console.WriteLine("Message Send Successfully ");
                     Thread.Sleep(2000);
